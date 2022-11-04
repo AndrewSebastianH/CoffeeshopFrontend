@@ -1,0 +1,19 @@
+.container{
+    text-align: center;
+}
+
+.weather-info{
+    padding-top: 20px;
+}
+
+.weather-info th{
+    text-align: left;
+}
+
+.error_message{
+    color: darkred;
+}
+
+background{
+    color: #3f3f3f;
+}

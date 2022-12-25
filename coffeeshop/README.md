@@ -1,5 +1,4 @@
-Andrew SH
-Theodora Andrea L
+Andrew SH & Theodora Andrea
 
 Coffee Shop
 

@@ -4,4 +4,4 @@ Theodora Andrea L
 Coffee Shop
 
 to run:
-###npm run start
+### npm run start

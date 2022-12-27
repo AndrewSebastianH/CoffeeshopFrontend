@@ -1,4 +1,5 @@
 import {useFormik} from 'formik';
+import React from "react";
 import * as Yup from 'yup';
 import {
     Box,
@@ -16,11 +17,19 @@ import {
 } from "react-router-dom";
 
 const Login = () => {
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            email: 'asdasda@mail.com',
-            password: 'iloveSGU'
+            email: '',
+            password: ''
         },
         validationSchema: Yup.object({
             email: Yup

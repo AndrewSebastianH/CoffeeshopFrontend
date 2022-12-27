@@ -68,6 +68,7 @@ function AdminMenu(){
                 flexGrow: 1,
                 py: 12,
                 margin: -1,
+                height: '100vh',
                 backgroundColor: (theme) =>
                     theme.palette.mode === 'light'
                         ? theme.palette.grey[100]

@@ -61,7 +61,7 @@ const AdminTopDrawer = () => {
                                 color: '#606c38'
                             }}
                         >
-                            <h3>ADMIN DASHBOARD</h3>
+                            <h4>COMPANY NAME COFFEE</h4>
                         </Typography>
                         <LocalCafeIcon
                             sx={{
@@ -73,7 +73,7 @@ const AdminTopDrawer = () => {
                         />
 
                         <Link
-                            to="/admin/menu"
+                            to="/menu"
                             style={{textDecoration: "none"}}
                         >
                             <Button>
@@ -89,7 +89,7 @@ const AdminTopDrawer = () => {
                         </Link>
                         <Divider/>
                         <Link
-                            to="/admin/ingredient"
+                            to="/cart"
                             style={{textDecoration: "none"}}
                         >
                             <Button>
@@ -99,7 +99,7 @@ const AdminTopDrawer = () => {
                                         py: 3
                                     }}
                                 >
-                                    <h2>Ingredient</h2>
+                                    <h2>Cart</h2>
                                 </Typography>
                             </Button>
                         </Link>

@@ -5,7 +5,7 @@ import {
     Button,
     Checkbox,
     Container,
-    FormHelperText,
+    FormHelperText, IconButton, InputAdornment,
     TextField,
     Typography
 } from '@mui/material';
@@ -14,15 +14,23 @@ import {
     useNavigate
 } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Visibility from "@mui/icons-material/Visibility";
+import React from "react";
 
 const Signup = () => {
+    const [showPassword, setShowPassword] = React.useState(false);
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             email: '',
             username: '',
             firstName: '',
-            password: '',
+            password: 'akuCintaSGU',
             policy: false
         },
         validationSchema: Yup.object({
@@ -141,7 +149,22 @@ const Signup = () => {
                             name="password"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
+                            value={formik.values.password}
+                            variant="outlined"
+                            InputProps={{
+                                endAdornment:
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                            }}
                             value={formik.values.password}
                             variant="outlined"
                         />

@@ -8,19 +8,21 @@ import {
     Container,
     FormHelperText,
     Grid,
+    IconButton,
+    InputAdornment,
     TextField,
-    Typography
+    Typography,
 } from '@mui/material';
 import {
     Link,
     useNavigate
 } from "react-router-dom";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
     const [showPassword, setShowPassword] = React.useState(false);
-
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
@@ -28,8 +30,8 @@ const Login = () => {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: ''
+            email: 'sgunumber1@gmail.com',
+            password: 'akuCintaSGU123'
         },
         validationSchema: Yup.object({
             email: Yup
@@ -127,9 +129,22 @@ const Login = () => {
                             name="password"
                             onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             value={formik.values.password}
                             variant="outlined"
+                            InputProps={{
+                                endAdornment:
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                            }}
                         />
                         <Box sx={{ py: 2 }}>
                             <Button

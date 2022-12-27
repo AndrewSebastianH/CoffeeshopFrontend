@@ -2,7 +2,7 @@ import React from 'react'
 import {InputAdornment, TextField, Button, Divider} from '@mui/material'
 import {Box} from '@mui/system'
 
-const EditMenu = (props) => {
+const EditIngredient = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -83,4 +83,4 @@ const EditMenu = (props) => {
     )
 }
 
-export default EditMenu
+export default EditIngredient

@@ -8,14 +8,23 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
+export function MenuListToolbar({menu , setAdminMenuSearchResults }) {
 
-export const MenuListToolbar = (props) => (
+    const onSearchChange = (e) => {
+        if (!e.target.value) return setAdminMenuSearchResults(menu)
 
-    <Box {...props}>
-        <Box sx={{ mt: 3 }}>
+        const resultsArray = menu.filter(menu =>
+            menu.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            menu.description.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+        setAdminMenuSearchResults(resultsArray)
+    }
+
+    return (
+        <Box sx={{mt: 3}}>
             <Card>
                 <CardContent>
-                    <Box sx={{ maxWidth: 550 }}>
+                    <Box sx={{maxWidth: 550}}>
                         <TextField
                             fullWidth
                             InputProps={{
@@ -30,13 +39,14 @@ export const MenuListToolbar = (props) => (
                                     </InputAdornment>
                                 )
                             }}
-                            placeholder="Search menu"
+                            placeholder="Search menu on admin"
+                            onChange={onSearchChange}
                         />
                     </Box>
                 </CardContent>
             </Card>
         </Box>
-    </Box>
 
 
-)
+    )
+}

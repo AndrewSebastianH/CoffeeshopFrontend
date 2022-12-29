@@ -19,8 +19,9 @@ import {
 } from "react-router-dom";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const Login = () => {
+const AdminLogin = () => {
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
@@ -45,7 +46,7 @@ const Login = () => {
                 .required('Password is required')
         }),
         onSubmit: () => {
-            navigate('/menu');
+            navigate('/admin/menu');
         }
     });
 
@@ -61,8 +62,21 @@ const Login = () => {
                 }}
             >
                 <Container maxWidth="sm">
+                    <Link
+                        to="/"
+                    >
+                        <Button
+                            startIcon={<ArrowBackIcon fontSize="small"/>}
+                            sx={{
+                                mb: -2
+                            }}
+                            to
+                        >
+                            Oops, bring me Back!
+                        </Button>
+                    </Link>
                     <form onSubmit={formik.handleSubmit}>
-                        <Box sx={{ my: 3 }}>
+                        <Box sx={{ my: 5,  }}>
                             <Typography
                                 color="textPrimary"
                                 variant="h4"
@@ -74,7 +88,7 @@ const Login = () => {
                                 gutterBottom
                                 variant="body2"
                             >
-                                Sign in as customer
+                                Sign in as an Admin
                             </Typography>
                         </Box>
                         <Grid
@@ -82,31 +96,6 @@ const Login = () => {
                             spacing={3}
                         >
                         </Grid>
-                        <Box
-                            sx={{
-                                pb: 1,
-                                pt: 3
-                            }}
-                        >
-                            <Typography
-                                align="center"
-                                color="textSecondary"
-                                variant="body1"
-                            >
-                                or sign in as
-                                {' '}
-
-                                <Link
-                                    to="/admin/login"
-                                    color="primary"
-                                    underline="always"
-                                    variant="subtitle2"
-                                >
-                                    an Admin
-                                </Link>
-
-                            </Typography>
-                        </Box>
                         <TextField
                             error={Boolean(formik.touched.email && formik.errors.email)}
                             fullWidth
@@ -155,26 +144,9 @@ const Login = () => {
                                 type="submit"
                                 variant="contained"
                             >
-                                Sign In
+                                Sign In as Admin
                             </Button>
                         </Box>
-                        <Typography
-                            color="textSecondary"
-                            variant="body2"
-                        >
-                            Don&apos;t have an account?
-                            {' '}
-                            <Link
-                                to="/signup"
-                                variant="subtitle2"
-                                underline="hover"
-                                sx={{
-                                    cursor: 'pointer'
-                                }}
-                            >
-                                Sign Up
-                            </Link>
-                        </Typography>
                     </form>
                 </Container>
             </Box>
@@ -182,4 +154,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default AdminLogin;

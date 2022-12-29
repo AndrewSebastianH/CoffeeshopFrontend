@@ -1,32 +1,30 @@
 import {
     Box,
-    Button,
     Card,
     CardContent,
     TextField,
     InputAdornment,
-    SvgIcon, Typography,
-    Modal
+    SvgIcon,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-export function IngredientListToolbar({ingredient, setIngredientSearchResults}) {
+export function CustomerMenuToolbar({menu , setSearchResults }) {
 
     const onSearchChange = (e) => {
-        if (!e.target.value) return setIngredientSearchResults(ingredient)
+        if (!e.target.value) return setSearchResults(menu)
 
-        const resultsArray = ingredient.filter(ingredient =>
-            ingredient.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-            ingredient.category.toLowerCase().includes(e.target.value.toLowerCase())
+        const resultsArray = menu.filter(menu =>
+            menu.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            menu.description.toLowerCase().includes(e.target.value.toLowerCase())
         )
-        setIngredientSearchResults(resultsArray)
+        setSearchResults(resultsArray)
     }
 
     return (
         <Box sx={{mt: 3}}>
             <Card>
                 <CardContent>
-                    <Box sx={{maxWidth: 500}}>
+                    <Box sx={{maxWidth: 550}}>
                         <TextField
                             fullWidth
                             InputProps={{
@@ -41,13 +39,14 @@ export function IngredientListToolbar({ingredient, setIngredientSearchResults}) 
                                     </InputAdornment>
                                 )
                             }}
-                            placeholder="Search Ingredient"
-                            variant="outlined"
+                            placeholder="Search menu"
                             onChange={onSearchChange}
                         />
                     </Box>
                 </CardContent>
             </Card>
         </Box>
+
+
     )
 }

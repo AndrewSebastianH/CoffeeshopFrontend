@@ -73,7 +73,7 @@ export const theme = createTheme({
             },
             styleOverrides: {
                 root: {
-                    padding: '32px 24px'
+                    padding: '32px 24px',
                 }
             }
         },

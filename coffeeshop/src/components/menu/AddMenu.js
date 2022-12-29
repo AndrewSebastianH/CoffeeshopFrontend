@@ -1,6 +1,17 @@
-import React from 'react'
-import {Chip, FormControl, MenuItem, InputLabel, InputAdornment, Select, TextField, Button, OutlinedInput} from '@mui/material'
+import React, {useEffect, useState} from 'react'
+import {
+    Chip,
+    FormControl,
+    MenuItem,
+    InputLabel,
+    InputAdornment,
+    Select,
+    TextField,
+    Button,
+    OutlinedInput
+} from '@mui/material'
 import {Box} from '@mui/system'
+import {getIngredientItems} from "../../data/ingredientItems";
 
 const AddMenu = (props) => {
 
@@ -18,9 +29,13 @@ const AddMenu = (props) => {
         })
     }
 
-    // const theme = useTheme();
     const [ingredientName, setIngredientName] = React.useState([]);
     const [optionalIngredientName, setOptionalIngredientName] = React.useState([]);
+
+    const [ingredients, setIngredients] = React.useState([]);
+
+    // const [ingredientNameField, setIngredientNameField] = React.useState([]);
+    // const [filteredData, setFilteredData] = React.useState()
 
     const handleIngredientChange = (event) => {
         const {
@@ -39,15 +54,31 @@ const AddMenu = (props) => {
         );
     };
 
-    const ingredients = [
-        'Milk',
-        'Almond Milk',
-        'Caramel Syrup',
-        'Hazelnut Syrup',
-        'Strawberry Syrup',
-        'Oat Milk',
-        'Espresso',
-    ];
+    // const ingredients = [
+    //     'Milk',
+    //     'Almond Milk',
+    //     'Caramel Syrup',
+    //     'Hazelnut Syrup',
+    //     'Strawberry Syrup',
+    //     'Oat Milk',
+    //     'Espresso',
+    // ];
+
+    useEffect(() => {
+        getIngredientItems()
+            .then(json => {
+                setIngredients(json)
+                return json
+            })
+    }, [])
+
+    // useEffect(()=> {
+    //     if (ingredients) {
+    //         const fieldValues =
+    //             ingredients.filter(item => item[ingredientNameField])
+    //         setFilteredData(fieldValues)
+    //     }
+    // },[ingredients])
 
     return (
         <Box component="form"
@@ -96,7 +127,7 @@ const AddMenu = (props) => {
             />
             <br/>
             {/*Base Ingredients */}
-            <FormControl sx={{ width: "100%", paddingBottom: 2}}>
+            <FormControl sx={{width: "100%", paddingBottom: 2}}>
                 <InputLabel id="baseIngredients">Base Ingredients</InputLabel>
                 <Select
                     labelId="baseIngredientlabel"
@@ -116,16 +147,16 @@ const AddMenu = (props) => {
                 >
                     {ingredients.map((ingredient) => (
                         <MenuItem
-                            key={ingredient}
-                            value={ingredient}
+                            key={ingredient.id}
+                            value={ingredient.name}
                         >
-                            {ingredient}
+                            {ingredient.name}
                         </MenuItem>
                     ))}
                 </Select>
             </FormControl>
             {/*Optional Ingredients */}
-            <FormControl sx={{ width: "100%", paddingBottom: 2}}>
+            <FormControl sx={{width: "100%", paddingBottom: 2}}>
                 <InputLabel id="optionalIngredients">Optional Ingredients</InputLabel>
                 <Select
                     labelId="optionalIngredientLabel"
@@ -145,10 +176,10 @@ const AddMenu = (props) => {
                 >
                     {ingredients.map((ingredient) => (
                         <MenuItem
-                            key={ingredient}
-                            value={ingredient}
+                            key={ingredient.id}
+                            value={ingredient.name}
                         >
-                            {ingredient}
+                            {ingredient.name}
                         </MenuItem>
                     ))}
                 </Select>

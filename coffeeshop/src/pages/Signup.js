@@ -4,8 +4,8 @@ import {
     Box,
     Button,
     Checkbox,
-    Container,
-    FormHelperText, IconButton, InputAdornment,
+    Container, FormControl,
+    FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select,
     TextField,
     Typography
 } from '@mui/material';
@@ -25,12 +25,18 @@ const Signup = () => {
         event.preventDefault();
     };
     const navigate = useNavigate();
+    const [role, setRole] = React.useState('');
+    const handleChange = (event) => {
+        setRole(event.target.value);
+    }
+
     const formik = useFormik({
         initialValues: {
             email: '',
             username: '',
             firstName: '',
-            password: 'akuCintaSGU',
+            password: '',
+            role: '',
             policy: false
         },
         validationSchema: Yup.object({
@@ -38,8 +44,7 @@ const Signup = () => {
                 .string()
                 .email('Must be a valid email')
                 .max(255)
-                .required(
-                    'Email is required'),
+                .required('Email is required'),
             firstName: Yup
                 .string()
                 .max(255)
@@ -52,6 +57,10 @@ const Signup = () => {
                 .string()
                 .max(255)
                 .required('Password is required'),
+            role: Yup
+                .string()
+                .max(255)
+                .required('Role is required'),
             policy: Yup
                 .boolean()
                 .oneOf(
@@ -161,15 +170,45 @@ const Signup = () => {
                                             onMouseDown={handleMouseDownPassword}
                                             edge="end"
                                         >
-                                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
                                         </IconButton>
                                     </InputAdornment>
                             }}
                             value={formik.values.password}
                             variant="outlined"
+                            sx={{
+                                marginBottom: 3
+                            }}
                         />
+                        <FormControl>
+                            <InputLabel id="role">Choose a role</InputLabel>
+                            <Select
+                                id="role"
+                                label="Choose a role"
+                                error={Boolean(formik.touched.role && formik.errors.role)}
+                                helperText={formik.touched.role && formik.errors.role}
+                                margin="normal"
+                                name="role"
+                                onBlur={formik.handleBlur}
+                                onChange={formik.handleChange}
+                                value={formik.values.role}
+                                variant="outlined"
+                                sx={{
+                                    minWidth: 250
+                                }}
+                            >
+                                <MenuItem value="">
+                                    <em>Choose a role</em>
+                                </MenuItem>
+                                <MenuItem value="user">User</MenuItem>
+                                <MenuItem value="admin">Admin</MenuItem>
+                            </Select>
+                            <FormHelperText>Sign up as a user / admin</FormHelperText>
+                        </FormControl>
+
                         <Box
                             sx={{
+                                mt: 1,
                                 alignItems: 'center',
                                 display: 'flex',
                                 ml: -1

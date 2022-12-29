@@ -18,7 +18,6 @@ const EditMenu = (props) => {
         <Box component="form"
              onSubmit={handleSubmit}
         >
-
             <TextField
                 required
                 name="name"

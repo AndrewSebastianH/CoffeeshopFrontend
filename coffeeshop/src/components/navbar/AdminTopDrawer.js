@@ -11,7 +11,14 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from "@mui/material/Divider";
+
 import LocalCafeIcon from '@mui/icons-material/LocalCafe';
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import GroupIcon from '@mui/icons-material/Group';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import {hover} from "@testing-library/user-event/dist/hover";
+import {makeStyles} from "@mui/material";
 
 
 const AdminTopDrawer = () => {
@@ -25,20 +32,23 @@ const AdminTopDrawer = () => {
         <Box
             sx={{
                 position: 'fixed',
+                zIndex: 100,
             }}
         >
-            <IconButton
+            <Button
+                color="primary"
+                variant="contained"
                 onClick={toggleDrawer}
                 sx={{
-                    backgroundColor: '#606C38',
-                    padding: 3,
+                    borderRadius:35,
+                    padding: 4.5,
                     margin: 2,
                     width: 60,
                     height: 60
                 }}
             >
-                <MenuIcon sx={{fontSize: 'inherit', color: 'white'}}/>
-            </IconButton>
+                <MenuIcon sx={{fontSize: 35, color: 'white'}}/>
+            </Button>
             <Drawer
                 sx={{
                     height: '100%',
@@ -53,15 +63,15 @@ const AdminTopDrawer = () => {
                 <Box>
                     <Toolbar
                         sx={{
-                            height: 150,
+                            height: 170,
                         }}
                     >
                         <Typography
                             sx={{
-                                color: '#606c38'
+                                color: '#606c38',
                             }}
                         >
-                            <h3>ADMIN DASHBOARD</h3>
+                            <h3>Admin Dashboard.</h3>
                         </Typography>
                         <LocalCafeIcon
                             sx={{
@@ -76,11 +86,21 @@ const AdminTopDrawer = () => {
                             to="/admin/menu"
                             style={{textDecoration: "none"}}
                         >
-                            <Button>
+                            <Button
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
+                                <RestaurantMenuIcon
+                                    sx={{
+                                        fontSize: 50,
+                                        color: '#606C38'
+                                    }}
+                                />
                                 <Typography
                                     sx={{
                                         px: 5,
-                                        py: 2
                                     }}
                                 >
                                     <h2>Menu</h2>
@@ -92,11 +112,21 @@ const AdminTopDrawer = () => {
                             to="/admin/ingredient"
                             style={{textDecoration: "none"}}
                         >
-                            <Button>
+                            <Button
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
+                                <ShoppingBasketIcon
+                                    sx={{
+                                        fontSize: 50,
+                                        color: '#606C38'
+                                    }}
+                                />
                                 <Typography
                                     sx={{
                                         px: 5,
-                                        py: 3
                                     }}
                                 >
                                     <h2>Ingredient</h2>
@@ -104,18 +134,54 @@ const AdminTopDrawer = () => {
                             </Button>
                         </Link>
                         <Divider/>
+                        {/*<Link*/}
+                        {/*    to="/admin/customer-list"*/}
+                        {/*    style={{textDecoration: "none"}}*/}
+                        {/*>*/}
+                        {/*    <Button*/}
+                        {/*        sx={{*/}
+                        {/*            display: 'flex',*/}
+                        {/*            flexDirection: 'column'*/}
+                        {/*        }}*/}
+                        {/*    >*/}
+                        {/*        <GroupIcon*/}
+                        {/*            sx={{*/}
+                        {/*                fontSize: 50,*/}
+                        {/*                color: '#606C38',*/}
+                        {/*            }}*/}
+                        {/*        />*/}
+                        {/*        <Typography*/}
+                        {/*            sx={{*/}
+                        {/*                px: 5,*/}
+                        {/*            }}*/}
+                        {/*        >*/}
+                        {/*            <h2>Customers</h2>*/}
+                        {/*        </Typography>*/}
+                        {/*    </Button>*/}
+                        {/*</Link>*/}
                         <Link
-                            to="/admin/customer-list"
+                            to="/"
                             style={{textDecoration: "none"}}
                         >
-                            <Button>
+                            <Button
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column'
+                                }}
+                            >
+                                <ExitToAppIcon
+                                    sx={{
+                                        fontSize: 50,
+                                        color: '#606C38',
+
+                                    }}
+                                />
                                 <Typography
                                     sx={{
                                         px: 5,
-                                        py: 3
                                     }}
                                 >
-                                    <h2>Customers</h2>
+                                    <h2>Logout</h2>
                                 </Typography>
                             </Button>
                         </Link>

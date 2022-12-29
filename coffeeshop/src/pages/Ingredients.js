@@ -28,32 +28,28 @@ import {IngredientListToolbar} from "../components/ingredient/IngredientListTool
 import EditIngredient from "../components/ingredient/EditIngredient";
 import AddIngredient from "../components/ingredient/AddIngredient";
 import AdminTopDrawer from "../components/navbar/AdminTopDrawer";
+import {getAdminMenuItems} from "../data/adminMenuItems";
+import {getIngredientItems} from "../data/ingredientItems";
+import IngredientList from "../components/ingredient/IngredientList";
 
 
 function Ingredient() {
 
-    const [ingredients, setIngredients] = useState([])
-    const [open, setOpen] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
-    const [openEdit, setOpenEdit] = useState(false);
-    const [select, setSelect] = useState({});
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+
+    const [adminIngredient, setAdminIngredient] = useState([])
+    const [adminIngredientSearchResults, setAdminIngredientSearchResults] = useState()
 
     useEffect(() => {
-        axios.get('http://localhost:8080/ingredients/')
-            .then(res => {
-                console.log(res)
-                setIngredients(() => res.data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        getIngredientItems().then(json => {
+            setAdminIngredient(json)
+            return json
+        }).then(json => {
+            setAdminIngredientSearchResults(json)
+        })
     }, [])
+
+    const [open, setOpen] = useState(false);
 
     return (
         <>
@@ -116,7 +112,7 @@ function Ingredient() {
                             </Dialog>
                         </Box>
                     </Box>
-                    <IngredientListToolbar/>
+                    <IngredientListToolbar ingredient={adminIngredient} setIngredientSearchResults={setAdminIngredientSearchResults} />
                     <Box sx={{pt: 3}}>
                         <Grid
                             container
@@ -131,104 +127,11 @@ function Ingredient() {
                             >
                                 <Card>
                                     <CardHeader
-                                        subheader={`${ingredients.length} ingredient items in total.`}
+                                        subheader={`${adminIngredient.length} ingredient items in total.`}
                                         title="Ingredient List"
                                     />
                                     <Divider/>
-                                    <List>
-                                        {ingredients.map((item, idx) => (
-                                            <ListItem
-                                                divider={idx < item.length - 1}
-                                                key={item.id}
-                                            >
-                                                <ListItemAvatar>
-                                                    <img
-                                                        alt={item.name}
-                                                        src={item.imageUrl}
-                                                        style={{
-                                                            height: 128,
-                                                            width: 68,
-                                                            objectFit: 'cover',
-                                                            paddingLeft: 10,
-                                                            paddingRight: 50
-                                                        }}
-                                                    />
-                                                </ListItemAvatar>
-                                                <ListItemText
-                                                    primary={item.name}
-                                                    secondary={`Last updated at ` + item.updatedAt}
-                                                />
-                                                <ButtonGroup>
-                                                    <IconButton>
-                                                        <EditIcon
-                                                            onClick={() => {
-                                                                setSelect(item)
-                                                                setOpenEdit(true)
-                                                            }}
-                                                        />
-                                                    </IconButton>
-                                                    <IconButton
-                                                        variant='contained'
-                                                        onClick={handleClickOpen}
-                                                    >
-                                                        <DeleteIcon/>
-                                                    </IconButton>
-                                                </ButtonGroup>
-                                            </ListItem>
-                                        ))
-                                        }
-                                        <Dialog
-                                            open={open}
-                                            onClose={handleClose}
-                                            aria-labelledby="alert-dialog-title"
-                                            aria-describedby="alert-dialog-description"
-                                        >
-                                            <DialogTitle id="alert-dialog-title">
-                                                {"Delete item"}
-                                            </DialogTitle>
-                                            <DialogContent>
-                                                <DialogContentText id="alert-dialog-description">
-                                                    Are you sure you want to delete this item?
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick={handleClose}>
-                                                    Cancel
-                                                </Button>
-                                                <Button
-                                                    onClick={async () => {
-                                                        await axios.delete(`http://localhost:8080/ingredients/${select._id}`)
-                                                            .then(res => {
-                                                                console.log(res.status)
-                                                                window.location.reload()
-                                                            })
-                                                            .catch(err => {
-                                                                console.log(err)
-                                                            })
-                                                    }}
-                                                    sx={{}}
-                                                >
-                                                    Delete
-                                                </Button>
-
-                                            </DialogActions>
-                                        </Dialog>
-                                        <Dialog
-                                            fullWidth="lg"
-                                            open={openEdit}
-                                            onClose={() => {
-                                                setOpenEdit(false)
-                                            }}
-                                        >
-                                            <DialogTitle>
-                                                Edit Ingredient Details
-                                            </DialogTitle>
-                                            <Divider/>
-                                            <DialogContent>
-                                                <EditIngredient item={select}/>
-                                            </DialogContent>
-                                        </Dialog>
-                                    </List>
+                                    <IngredientList adminSearchResults={adminIngredientSearchResults} />
                                     <Divider/>
                                 </Card>
                             </Grid>

@@ -14,10 +14,10 @@ import {
     CardHeader,
     Grid
 } from '@mui/material'
-import {MenuListToolbar} from "../components/menu/MenuListToolbar";
-import AddMenu from '../components/menu/AddMenu';
-import AdminTopDrawer from "../components/navbar/AdminTopDrawer";
-import AdminMenuList from "../components/menu/AdminMenuList";
+import {MenuListToolbar} from "../components/adminPageComponents/menu/MenuListToolbar";
+import AddMenu from '../components/adminPageComponents/menu/AddMenu';
+import AdminTopDrawer from "../components/adminPageComponents/navbar/AdminTopDrawer";
+import AdminMenuList from "../components/adminPageComponents/menu/AdminMenuList";
 
 function AdminMenu() {
     const [adminMenu, setAdminMenu] = useState([])

@@ -28,7 +28,7 @@ import ListItemText from "@mui/material/ListItemText";
 import {CustomerMenuToolbar} from "../components/customerPageComponents/customerMenu/CustomerMenuToolbar";
 import MenuListPage from "../components/customerPageComponents/customerMenu/MenuListPage";
 
-import CustomerTopDrawer from "../components/navbar/CustomerTopDrawer";
+import CustomerTopDrawer from "../components/adminPageComponents/navbar/CustomerTopDrawer";
 
 function CustomerMenu(){
     const [menu, setMenu] = useState([])

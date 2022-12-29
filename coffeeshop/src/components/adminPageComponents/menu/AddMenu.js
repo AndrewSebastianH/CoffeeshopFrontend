@@ -11,7 +11,7 @@ import {
     OutlinedInput
 } from '@mui/material'
 import {Box} from '@mui/system'
-import {getIngredientItems} from "../../data/ingredientItems";
+import {getIngredientItems} from "../../../data/ingredientItems";
 
 const AddMenu = (props) => {
 

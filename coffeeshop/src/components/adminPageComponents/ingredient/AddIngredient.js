@@ -78,7 +78,7 @@ const AddIngredient = (props) => {
                 label="Stock"
                 type="number"
                 InputProps={{
-                    endAdornment: <InputAdornment position='end'>Box, Bottles, etc</InputAdornment>
+                    endAdornment: <InputAdornment position='end'>Boxes, Bottles, etc</InputAdornment>
                 }}
                 sx={{
                     paddingBottom: 2

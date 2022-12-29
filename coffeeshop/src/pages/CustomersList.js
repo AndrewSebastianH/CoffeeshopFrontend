@@ -24,9 +24,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ListItemText from "@mui/material/ListItemText";
 
-import EditCustomer from "../components/customers/EditCustomer";
-import {CustomerListToolbar} from "../components/customers/CustomerListToolbar";
-import AdminTopDrawer from "../components/navbar/AdminTopDrawer";
+import EditCustomer from "../components/adminPageComponents/customers/EditCustomer";
+import {CustomerListToolbar} from "../components/adminPageComponents/customers/CustomerListToolbar";
+import AdminTopDrawer from "../components/adminPageComponents/navbar/AdminTopDrawer";
 
 
 function CustomersList() {

@@ -55,7 +55,7 @@ const EditIngredient = (props) => {
                 type="number"
                 defaultValue={props.item.stock}
                 InputProps={{
-                    endAdornment: <InputAdornment position='end'>Boxes</InputAdornment>
+                    endAdornment: <InputAdornment position='end'>Boxes, Bottles, etc.</InputAdornment>
                 }}
                 sx={{
                     paddingBottom: 3

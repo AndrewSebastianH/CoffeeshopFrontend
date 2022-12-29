@@ -24,13 +24,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import ListItemText from "@mui/material/ListItemText";
 
-import {IngredientListToolbar} from "../components/ingredient/IngredientListToolbar";
-import EditIngredient from "../components/ingredient/EditIngredient";
-import AddIngredient from "../components/ingredient/AddIngredient";
-import AdminTopDrawer from "../components/navbar/AdminTopDrawer";
+import {IngredientListToolbar} from "../components/adminPageComponents/ingredient/IngredientListToolbar";
+import EditIngredient from "../components/adminPageComponents/ingredient/EditIngredient";
+import AddIngredient from "../components/adminPageComponents/ingredient/AddIngredient";
+import AdminTopDrawer from "../components/adminPageComponents/navbar/AdminTopDrawer";
 import {getAdminMenuItems} from "../data/adminMenuItems";
 import {getIngredientItems} from "../data/ingredientItems";
-import IngredientList from "../components/ingredient/IngredientList";
+import IngredientList from "../components/adminPageComponents/ingredient/IngredientList";
 
 
 function Ingredient() {

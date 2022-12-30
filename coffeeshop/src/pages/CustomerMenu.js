@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import {getMenuItems} from "../data/menuItems";
+import coffeePic from "../assets/coffeePic.jpg"
 
 import {
     Container,
@@ -15,20 +16,13 @@ import {
     ListItem,
     ListItemAvatar,
     CardHeader,
-    Grid
+    Grid, Paper, Toolbar
 } from '@mui/material'
-import DeleteIcon from '@mui/icons-material/Delete';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
-import ListItemText from "@mui/material/ListItemText";
 import {CustomerMenuToolbar} from "../components/customerPageComponents/customerMenu/CustomerMenuToolbar";
 import MenuListPage from "../components/customerPageComponents/customerMenu/MenuListPage";
 
-import CustomerTopDrawer from "../components/adminPageComponents/navbar/CustomerTopDrawer";
+import CustomerTopDrawer from "../components/customerPageComponents/navbar/CustomerTopDrawer";
 
 function CustomerMenu(){
     const [menu, setMenu] = useState([])
@@ -46,12 +40,42 @@ function CustomerMenu(){
     return (
         <>
             <CustomerTopDrawer/>
+            <Paper
+                elevation={2}
+                sx={{
+                    margin: -1,
+                    paddingTop: -1,
+                    backgroundImage: `url(${coffeePic})`,
+                    backgroundPosition: '0px 850px',
+                    backgroundSize: 'cover',
+                    minWidth: '100%',
+                    height: '60vh'
+                }}
+            >
+                <Box
+                    sx={{
+                        py:20,
+                        px: 20
+                    }}
+                >
+                    <Grid sx={{ flexGrow: 1 }} container justifyContent="start" alignItems="center">
+                        <Grid item xs={12}>
+                            <Typography variant="h2" gutterBottom>
+                                Welcome to Gamau Coffee
+                            </Typography>
+                        </Grid>
+                        <Typography variant="subtitle1">
+                            Your best place to order coffee even when you dont want to
+                        </Typography>
+                    </Grid>
+                </Box>
+            </Paper>
 
             <Box
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    py: 12,
+                    py: 6,
                     margin: -1,
                     height: '100vh',
                     backgroundColor: (theme) =>
@@ -72,16 +96,15 @@ function CustomerMenu(){
                         }}
                     >
                         <Typography
-                            sx={{ m: 1}}
+                            sx={{ m: 1, p: 1}}
                             variant="h4"
                         >
                             Menu
                         </Typography>
+
                     </Box>
-
                     <CustomerMenuToolbar menu={menu} setSearchResults={setSearchResults}/>
-
-                    <Box sx={{ pt : 3, display: 'flex'}}>
+                    <Box sx={{pt: 3, display: 'flex'}}>
                         <Grid
                             container
                             spacing={3}
@@ -96,36 +119,10 @@ function CustomerMenu(){
                                 <Card>
                                     <CardHeader
                                         subheader={`${menu.length} menu items in total.`}
-                                        title="Menu List"
+                                        title="Drinks"
                                     />
                                     <Divider/>
                                     <MenuListPage searchResults={searchResults} />
-                                    {/*<List>*/}
-                                    {/*    {menu.map((item, idx) => (*/}
-                                    {/*        <ListItem*/}
-                                    {/*            divider={idx < item.length - 1}*/}
-                                    {/*            key={item.id}*/}
-                                    {/*        >*/}
-                                    {/*            <ListItemAvatar >*/}
-                                    {/*                <img*/}
-                                    {/*                    alt={item.name}*/}
-                                    {/*                    src={item.imageUrl}*/}
-                                    {/*                    style={{*/}
-                                    {/*                        height: 154,*/}
-                                    {/*                        width: 86,*/}
-                                    {/*                        objectFit: 'cover',*/}
-                                    {/*                        paddingLeft: 10,*/}
-                                    {/*                        paddingRight: 50*/}
-                                    {/*                    }}*/}
-                                    {/*                />*/}
-                                    {/*            </ListItemAvatar>*/}
-                                    {/*            <ListItemText*/}
-                                    {/*                primary={item.name}*/}
-                                    {/*            />*/}
-                                    {/*        </ListItem>*/}
-                                    {/*    ))*/}
-                                    {/*    }*/}
-                                    {/*</List>*/}
                                     <Divider/>
                                 </Card>
                             </Grid>

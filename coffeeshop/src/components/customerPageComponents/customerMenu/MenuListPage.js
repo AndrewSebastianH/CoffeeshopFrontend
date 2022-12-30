@@ -1,4 +1,4 @@
-import {List} from "@mui/material";
+import {Grid, List} from "@mui/material";
 import React from "react";
 import Menus from "./Menus";
 
@@ -8,9 +8,12 @@ const MenuListPage = ({searchResults}) => {
 
     return (
         <main>
-            <List>
-                {content}
-            </List>
+            <Grid
+                container
+                spacing={2}
+            >
+            {content}
+            </Grid>
         </main>
     )
 }

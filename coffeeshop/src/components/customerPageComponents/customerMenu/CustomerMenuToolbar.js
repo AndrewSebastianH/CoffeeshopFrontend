@@ -41,6 +41,8 @@ export function CustomerMenuToolbar({menu , setSearchResults }) {
                             }}
                             placeholder="Search menu"
                             onChange={onSearchChange}
+                            helperText={`${menu.length} menu items in total.`}
+
                         />
                     </Box>
                 </CardContent>

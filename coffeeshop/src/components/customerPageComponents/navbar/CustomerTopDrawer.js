@@ -29,7 +29,7 @@ const CustomerTopDrawer = () => {
         <Box
             sx={{
                 position: 'fixed',
-                zIndex: 100
+                zIndex: 100,
             }}
         >
             <Button
@@ -56,12 +56,13 @@ const CustomerTopDrawer = () => {
                 anchor="top"
                 open={isOpen}
                 onClose={toggleDrawer}
+
             >
                 <Box>
                     <Toolbar
                         sx={{
                             height: 150,
-                            mt: 3
+                            mt: 3,
                         }}
                     >
                         <Typography

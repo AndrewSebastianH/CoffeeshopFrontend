@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {InputAdornment, TextField, Button, Divider} from '@mui/material'
 import {Box} from '@mui/system'
+import {ingredientApi} from "../../../data/ingredientItems";
 
 const EditIngredient = (props) => {
+
+    const [successEdit, setSuccessEdit] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -12,14 +15,31 @@ const EditIngredient = (props) => {
             category: data.get('category'),
             stock: data.get('stock'),
             price: data.get('price')
-
         })
+        ingredientApi.put(`${data.get('id')}`, {
+            name: data.get('name'),
+            category: data.get('category'),
+            stock: data.get('stock'),
+            price: data.get('price')
+        })
+            .then(res => console.log(res))
+            .then(data => setSuccessEdit(true))
+            .catch(err => console.error(err))
+    }
+
+    if (successEdit) {
+        window.location.reload()
     }
 
     return (
         <Box component="form"
              onSubmit={handleSubmit}
         >
+            <TextField
+                type="hidden"
+                name="id"
+                defaultValue={props.item._id}
+            />
             <TextField
                 required
                 name="name"
@@ -62,11 +82,11 @@ const EditIngredient = (props) => {
                 }}
             />
             <TextField
-                name="description"
+                name="category"
                 variant="standard"
                 fullWidth
-                label="Description"
-                defaultValue={props.item.description}
+                label="Category"
+                defaultValue={props.item.category}
                 sx={{
                     display: "flex",
                     flexDirection: "row"

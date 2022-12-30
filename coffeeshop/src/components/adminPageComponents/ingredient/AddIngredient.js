@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Chip, FormControl, MenuItem, InputLabel, InputAdornment, Select, TextField, Button, OutlinedInput} from '@mui/material'
 import {Box} from '@mui/system'
 import {ingredientApi} from "../../../data/ingredientItems";
@@ -23,11 +23,13 @@ const AddIngredient = (props) => {
             imageUrl: data.get('imageUrl'),
         })
             .then(res => console.log(res))
+            .then(data => { setSuccessAdd(true) })
             .catch(err => console.error(err))
     }
 
-    const [ingredientName, setIngredientName] = React.useState([]);
-    const [optionalIngredientName, setOptionalIngredientName] = React.useState([]);
+    const [ingredientName, setIngredientName] = useState([]);
+    const [optionalIngredientName, setOptionalIngredientName] = useState([]);
+    const [successAdd, setSuccessAdd] = useState(false)
 
     const handleIngredientChange = (event) => {
         const {
@@ -45,6 +47,9 @@ const AddIngredient = (props) => {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
+    if (successAdd) {
+        window.location.reload()
+    }
 
     return (
         <Box component="form"

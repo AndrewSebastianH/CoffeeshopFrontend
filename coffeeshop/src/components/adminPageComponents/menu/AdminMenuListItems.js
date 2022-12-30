@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, Divider, IconButton, ListItem, ListItemAvatar} from "@mui/material";
+import {Alert, Button, ButtonGroup, Divider, IconButton, ListItem, ListItemAvatar, Snackbar} from "@mui/material";
 import ListItemText from "@mui/material/ListItemText";
 import React, {useState} from "react";
 import EditIcon from "@mui/icons-material/Edit";
@@ -16,16 +16,10 @@ const AdminMenuListItems = ({menu}) => {
 
     const [open, setOpen] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
-
     const [select, setSelect] = useState({});
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClickOpen = () => {setOpen(true);};
+    const handleClose = () => {setOpen(false);};
 
     return (
         <List>
@@ -102,12 +96,12 @@ const AdminMenuListItems = ({menu}) => {
                     <Button
                         color="error"
                         onClick={
-
                             async () => {
                                 await axios.delete(`http://localhost:8080/menu/${select._id}`)
                                     .then(res => {
                                         console.log(res.status)
                                         window.location.reload()
+
                                         alert(`${select.name} is successfully deleted.`)
                                     })
                                     .catch(err => {
@@ -118,6 +112,7 @@ const AdminMenuListItems = ({menu}) => {
                     >
                         Delete
                     </Button>
+
                 </DialogActions>
             </Dialog>
             <Dialog

@@ -15,7 +15,9 @@ import {getIngredientItems} from "../../../data/ingredientItems";
 import axios from "axios";
 import {adminMenuApi} from "../../../data/adminMenuItems";
 
+
 const AddMenu = (props) => {
+    const [successAddingMenu, setSuccessAddingMenu] = useState(false);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -37,9 +39,12 @@ const AddMenu = (props) => {
             optionalIngredients: data.get('optionalIngredients')
         })
             .then(res => console.log(res))
+            .then(data => setSuccessAddingMenu(true))
             .catch(err => console.error(err))
     }
-
+    if (successAddingMenu){
+        window.location.reload();
+    }
     const [ingredientName, setIngredientName] = React.useState([]);
     const [optionalIngredientName, setOptionalIngredientName] = React.useState([]);
 
@@ -53,7 +58,7 @@ const AddMenu = (props) => {
             target: {value},
         } = event;
         setIngredientName(
-            typeof value === 'string' ? value.split(',') : value,
+            typeof value === 'array' ? value.split(',') : value,
         );
     };
     const handleOptionalIngredientChange = (event) => {

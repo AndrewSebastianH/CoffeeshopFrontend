@@ -1,6 +1,7 @@
 import React from 'react'
 import {Chip, FormControl, MenuItem, InputLabel, InputAdornment, Select, TextField, Button, OutlinedInput} from '@mui/material'
 import {Box} from '@mui/system'
+import {ingredientApi} from "../../../data/ingredientItems";
 
 const AddIngredient = (props) => {
 
@@ -13,8 +14,16 @@ const AddIngredient = (props) => {
             price: data.get('price'),
             stock: data.get('stock'),
             imageUrl: data.get('imageUrl'),
-
         })
+        ingredientApi.post('/', {
+            name: data.get('name'),
+            category: data.get('category'),
+            price: data.get('price'),
+            stock: data.get('stock'),
+            imageUrl: data.get('imageUrl'),
+        })
+            .then(res => console.log(res))
+            .catch(err => console.error(err))
     }
 
     const [ingredientName, setIngredientName] = React.useState([]);

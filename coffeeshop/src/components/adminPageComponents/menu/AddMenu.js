@@ -12,6 +12,8 @@ import {
 } from '@mui/material'
 import {Box} from '@mui/system'
 import {getIngredientItems} from "../../../data/ingredientItems";
+import axios from "axios";
+import {adminMenuApi} from "../../../data/adminMenuItems";
 
 const AddMenu = (props) => {
 
@@ -25,8 +27,17 @@ const AddMenu = (props) => {
             imageUrl: data.get('imageUrl'),
             baseIngredients: data.get('baseIngredients'),
             optionalIngredients: data.get('optionalIngredients')
-
         })
+        adminMenuApi.post('/', {
+            name: data.get('name'),
+            description: data.get('description'),
+            basePrice: data.get('basePrice'),
+            imageUrl: data.get('imageUrl'),
+            baseIngredients: data.get('baseIngredients'),
+            optionalIngredients: data.get('optionalIngredients')
+        })
+            .then(res => console.log(res))
+            .catch(err => console.error(err))
     }
 
     const [ingredientName, setIngredientName] = React.useState([]);

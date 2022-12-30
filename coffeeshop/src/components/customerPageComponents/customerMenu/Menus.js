@@ -10,8 +10,12 @@ const Menus = ({menu}) => {
         //     <img src={menu.imageUrl}></img>
         //     <p>{menu.timestamp}</p>
         // </article>
-        <Grid item xs={3}
+        <Grid item md={3} xs={6}
               key={menu.id}
+              sx={{
+                  display:'flex',
+                  flexDirection: ' column',
+              }}
         >
             <Button
                 // variant="contained"

@@ -13,6 +13,7 @@ import {
     Link,
     useNavigate
 } from "react-router-dom";
+import axios from 'axios';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
@@ -20,13 +21,15 @@ import React, {useState} from "react";
 import {userApi} from "../data/usersItems";
 
 const Signup = () => {
-        const [showPassword, setShowPassword] = React.useState(false);
+
+        const [showPassword, setShowPassword] = useState(false);
         const handleClickShowPassword = () => setShowPassword((show) => !show);
         const handleMouseDownPassword = (event) => {
             event.preventDefault();
         };
         const [formSubmitted, setFormSubmitted] = useState(false);
-        const handleSubmit = (e) => {
+
+        const handleSubmit = async (e) => {
             e.preventDefault();
             const data = new FormData(e.currentTarget);
             console.log({
@@ -34,23 +37,26 @@ const Signup = () => {
                 firstName: data.get('firstName'),
                 email: data.get('email'),
                 password: data.get('password'),
-                role: data.get('role')
+                roles: ["customer"]
             })
-            userApi.post('/', {
+
+            const body = {
                 username: data.get('username'),
-                firstName: data.get('firstName'),
                 email: data.get('email'),
                 password: data.get('password'),
-                role: data.get('role')
+                roles: ["customer"],
+            }
+
+            await axios.post('http://localhost:8080/auth/signup', body)
+            .then(async (res) => {
+                console.log(res)
+            }).catch(e => {
+                console.log(e)
             })
-                .then(res => console.log(res),
-                   // navigate('/')
-                )
-                .then(data => setFormSubmitted(true))
-                .catch(err => console.error(err))
         }
 
         const navigate = useNavigate();
+
         const [role, setRole] = React.useState('');
         const handleChange = (event) => {
             setRole(event.target.value);
@@ -198,8 +204,6 @@ const Signup = () => {
                                             </IconButton>
                                         </InputAdornment>
                                 }}
-                                value={formik.values.password}
-                                variant="outlined"
                                 sx={{
                                     marginBottom: 3
                                 }}

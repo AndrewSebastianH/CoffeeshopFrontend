@@ -1,5 +1,7 @@
 import {useFormik} from 'formik';
 import React from "react";
+import { useState } from 'react';
+import axios from 'axios';
 import * as Yup from 'yup';
 import {
     Box,
@@ -12,6 +14,8 @@ import {
     InputAdornment,
     TextField,
     Typography,
+    Snackbar,
+    Alert
 } from '@mui/material';
 import {
     Link,
@@ -22,6 +26,11 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const AdminLogin = () => {
+
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
@@ -29,6 +38,37 @@ const AdminLogin = () => {
     };
 
     const navigate = useNavigate();
+
+    const handleKeyPress = e => {
+        if (e.key === "Enter") {
+            console.log("enter")
+            submitLogin()
+        }
+    }
+
+    const submitLogin = async () => {
+        const body = {
+            username: username,
+            password: password
+           }
+
+        await axios.post('http://localhost:8080/auth/signin', body)
+        .then(async (res) => {
+            console.log(res.data.token)
+            const result = res.data
+            localStorage.token = result.token
+            localStorage.email = result.email
+            sessionStorage.token = result.token
+            sessionStorage.role = result.roles
+
+            navigate('/admin/menu')
+        }).catch(e => {
+            setError(true)
+            console.log(e)
+        })
+    }
+
+    /*
     const formik = useFormik({
         initialValues: {
             email: 'sgunumber1@gmail.com',
@@ -49,6 +89,7 @@ const AdminLogin = () => {
             navigate('/admin/menu');
         }
     });
+    */
 
     return (
         <>
@@ -75,7 +116,7 @@ const AdminLogin = () => {
                             Oops, bring me Back!
                         </Button>
                     </Link>
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={submitLogin}>
                         <Box sx={{ my: 5,  }}>
                             <Typography
                                 color="textPrimary"
@@ -97,29 +138,23 @@ const AdminLogin = () => {
                         >
                         </Grid>
                         <TextField
-                            error={Boolean(formik.touched.email && formik.errors.email)}
                             fullWidth
-                            helperText={formik.touched.email && formik.errors.email}
-                            label="Email Address"
+                            label="Username"
                             margin="normal"
-                            name="email"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
-                            type="email"
-                            value={formik.values.email}
+                            name="username"
+                            onChange={(e) => {setUsername(e.target.value)}}
+                            type="text"
+                            value={username}
                             variant="outlined"
                         />
                         <TextField
-                            error={Boolean(formik.touched.password && formik.errors.password)}
                             fullWidth
-                            helperText={formik.touched.password && formik.errors.password}
                             label="Password"
                             margin="normal"
                             name="password"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
+                            onChange={(e)=>setPassword(e.target.value)}
                             type={showPassword ? 'text' : 'password'}
-                            value={formik.values.password}
+                            value={password}
                             variant="outlined"
                             InputProps={{
                                 endAdornment:
@@ -138,7 +173,6 @@ const AdminLogin = () => {
                         <Box sx={{ py: 2 }}>
                             <Button
                                 color="primary"
-                                disabled={formik.isSubmitting}
                                 fullWidth
                                 size="large"
                                 type="submit"
@@ -149,6 +183,13 @@ const AdminLogin = () => {
                         </Box>
                     </form>
                 </Container>
+                <Snackbar open={error} autoHideDuration={5000} onClose={()=>{
+                setError(false)
+            }}>
+                <Alert severity="error">
+                    Wrong username or password!
+                </Alert>
+            </Snackbar>
             </Box>
         </>
     );

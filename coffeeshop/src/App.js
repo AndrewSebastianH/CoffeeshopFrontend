@@ -9,6 +9,8 @@ import {
     Link
 } from "react-router-dom";
 
+import Auth from './utility/Auth';
+
 // pages
 import AdminMenu from './pages/AdminMenu';
 import CustomersList from "./pages/CustomersList"
@@ -30,9 +32,13 @@ function App() {
 
                 {/* Admin Page Routes */}
                 <Route path="/admin/login" element={ <AdminLogin/> } />
-                <Route path="/admin/ingredient" element={ <Ingredients/> }/>
+                <Route element={<Auth allowedRoles={["ROLE_ADMIN"]}/>}>
+                    <Route path="/admin/ingredient" element={ <Ingredients/> }/>
+                </Route>
+                <Route element={<Auth allowedRoles={["ROLE_ADMIN"]}/>}>
+                    <Route path="/admin/menu" element={ <AdminMenu/> }/>
+                </Route>
                 <Route path="/admin/customer-list" element={ <CustomersList/> }/>
-                <Route path="/admin/menu" element={ <AdminMenu/> }/>
             </Routes>
         </ThemeProvider>
     );

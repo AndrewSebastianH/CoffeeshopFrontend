@@ -1,5 +1,7 @@
 import {useFormik} from 'formik';
 import React from "react";
+import { useState, useContext } from 'react';
+import axios from 'axios';
 import * as Yup from 'yup';
 import {
     Box,
@@ -12,6 +14,8 @@ import {
     InputAdornment,
     TextField,
     Typography,
+    Snackbar,
+    Alert
 } from '@mui/material';
 import {
     Link,
@@ -19,38 +23,84 @@ import {
 } from "react-router-dom";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import UserModel from '../models/User';
+import { set } from 'date-fns';
 
 const Login = () => {
+
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState(false)
+    const navigate = useNavigate()
+
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => {
         event.preventDefault();
     };
 
-    const navigate = useNavigate();
-    const formik = useFormik({
-        initialValues: {
-            email: 'sgunumber1@gmail.com',
-            password: 'akuCintaSGU123'
-        },
-        validationSchema: Yup.object({
-            email: Yup
-                .string()
-                .email('Must be a valid email')
-                .max(255)
-                .required('Email is required'),
-            password: Yup
-                .string()
-                .max(255)
-                .required('Password is required')
-        }),
-        onSubmit: () => {
-            navigate('/menu');
+    const submitLogin = async () => {
+        const body = {
+            username: username,
+            password: password
+           }
+
+        await axios.post('http://localhost:8080/auth/signin', body)
+        .then(async (res) => {
+            console.log(res.data.token)
+            const result = res.data
+            localStorage.token = result.token
+            localStorage.email = result.email
+            sessionStorage.token = result.token
+            sessionStorage.role = result.roles
+
+       //     await ability.update(sessionStorage.role)
+            if(sessionStorage.role == "ROLE_ADMIN") {
+                navigate('/admin/menu')
+            } else if (sessionStorage.role == "ROLE_CUSTOMER") {
+                navigate('/menu')
+
+            }
+        }).catch(e => {
+            setError(true)
+            console.log(e)
+        })
+
+/*
+        try {
+           // const result = await UserModel.login(username, password)
+
+
+
+            
+          if (!result) {
+                console.log("ERROR")
+            } else if (result.token) {
+                console.log(result)
+                localStorage.token = result.token
+                localStorage.email = result.email
+                sessionStorage.token = result.token
+                sessionStorage.role = result.role
+                sessionStorage.setItem('ability', JSON.stringify(result.ability))
+                navigate('/menu')
+            }
+        } catch (e) {
+            console.error(e)
         }
-    });
+*/
+    }
+
+    const handleKeyPress = e => {
+        if (e.key === "Enter") {
+            console.log("enter")
+            submitLogin()
+        }
+    }
+
 
     return (
         <>
+
             <Box
                 sx={{
                     alignItems: 'center',
@@ -61,7 +111,10 @@ const Login = () => {
                 }}
             >
                 <Container maxWidth="sm">
-                    <form onSubmit={formik.handleSubmit}>
+                    <form onSubmit={(e)=>{
+                        e.preventDefault()
+                        submitLogin()
+                    }}>
                         <Box sx={{ my: 3 }}>
                             <Typography
                                 color="textPrimary"
@@ -104,33 +157,27 @@ const Login = () => {
                                 >
                                     an Admin
                                 </Link>
-
                             </Typography>
                         </Box>
                         <TextField
-                            error={Boolean(formik.touched.email && formik.errors.email)}
                             fullWidth
-                            helperText={formik.touched.email && formik.errors.email}
-                            label="Email Address"
+                            label="Username"
                             margin="normal"
-                            name="email"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
-                            type="email"
-                            value={formik.values.email}
+                            name="username"
+                            onChange={(e)=> { setUsername(e.target.value)}}
+                            type="text"
+                            value={username}
                             variant="outlined"
                         />
                         <TextField
-                            error={Boolean(formik.touched.password && formik.errors.password)}
                             fullWidth
-                            helperText={formik.touched.password && formik.errors.password}
                             label="Password"
                             margin="normal"
                             name="password"
-                            onBlur={formik.handleBlur}
-                            onChange={formik.handleChange}
+                            onChange={(e) => { setPassword(e.target.value)}}
+                            onKeyPress={handleKeyPress}
                             type={showPassword ? 'text' : 'password'}
-                            value={formik.values.password}
+                            value={password}
                             variant="outlined"
                             InputProps={{
                                 endAdornment:
@@ -149,7 +196,6 @@ const Login = () => {
                         <Box sx={{ py: 2 }}>
                             <Button
                                 color="primary"
-                                disabled={formik.isSubmitting}
                                 fullWidth
                                 size="large"
                                 type="submit"
@@ -178,6 +224,14 @@ const Login = () => {
                     </form>
                 </Container>
             </Box>
+            <Snackbar open={error} autoHideDuration={5000} onClose={()=>{
+                setError(false)
+            }}>
+                <Alert severity="error">
+                    Wrong username or password!
+                </Alert>
+            </Snackbar>
+ 
         </>
     );
 };

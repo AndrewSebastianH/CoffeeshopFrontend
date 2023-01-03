@@ -15,16 +15,16 @@ const Menus = ({menu}) => {
               sx={{
                   display:'flex',
                   flexDirection: ' column',
+                  margin: 0
               }}
         >
             <Button
-                // variant="contained"
                 sx={{
                     borderRadius: 50,
                     display:'flex',
                     flexDirection: ' column',
-                    width:264,
-                    height:264,
+                    width:244,
+                    height:244,
                     paddingBottom:5,
                 }}
             >

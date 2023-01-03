@@ -1,11 +1,12 @@
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {
+    Alert,
     Box,
     Button,
     Checkbox,
     Container, FormControl,
-    FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select,
+    FormHelperText, IconButton, InputAdornment, InputLabel, MenuItem, Select, Snackbar,
     TextField,
     Typography
 } from '@mui/material';
@@ -21,7 +22,8 @@ import React, {useState} from "react";
 import {userApi} from "../data/usersItems";
 
 const Signup = () => {
-
+        const [success, setSuccess] = useState(false);
+        const [error, setError] = useState(false);
         const [showPassword, setShowPassword] = useState(false);
         const handleClickShowPassword = () => setShowPassword((show) => !show);
         const handleMouseDownPassword = (event) => {
@@ -37,20 +39,27 @@ const Signup = () => {
                 firstName: data.get('firstName'),
                 email: data.get('email'),
                 password: data.get('password'),
-                roles: ["customer"]
+                roles: [ data.get('role') ]
+                // roles: ["customer"]
             })
 
             const body = {
                 username: data.get('username'),
                 email: data.get('email'),
                 password: data.get('password'),
-                roles: ["customer"],
+                roles: [ data.get('role') ]
+                // roles: ["customer"]
             }
+
+            // setFormSubmitted(true);
 
             await axios.post('http://localhost:8080/auth/signup', body)
             .then(async (res) => {
+                setSuccess(true)
                 console.log(res)
+                navigate('/')
             }).catch(e => {
+                setError(true)
                 console.log(e)
             })
         }
@@ -58,6 +67,7 @@ const Signup = () => {
         const navigate = useNavigate();
 
         const [role, setRole] = React.useState('');
+
         const handleChange = (event) => {
             setRole(event.target.value);
         }
@@ -228,46 +238,46 @@ const Signup = () => {
                                     <MenuItem value="">
                                         <em>Choose a role</em>
                                     </MenuItem>
-                                    <MenuItem value="user">User</MenuItem>
+                                    <MenuItem value="customer">Customer</MenuItem>
                                     <MenuItem value="admin">Admin</MenuItem>
                                 </Select>
                                 <FormHelperText>Sign up as a user / admin</FormHelperText>
                             </FormControl>
 
-                            <Box
-                                sx={{
-                                    mt: 1,
-                                    alignItems: 'center',
-                                    display: 'flex',
-                                    ml: -1
-                                }}
-                            >
-                                <Checkbox
-                                    checked={formik.values.policy}
-                                    name="policy"
-                                    onChange={formik.handleChange}
-                                />
-                                <Typography
-                                    color="textSecondary"
-                                    variant="body2"
-                                >
-                                    I have read the
-                                    {' '}
-                                    <Link
-                                        to="#"
-                                        color="primary"
-                                        underline="always"
-                                        variant="subtitle2"
-                                    >
-                                        Terms and Conditions
-                                    </Link>
-                                </Typography>
-                            </Box>
-                            {Boolean(formik.touched.policy && formik.errors.policy) && (
-                                <FormHelperText error>
-                                    {formik.errors.policy}
-                                </FormHelperText>
-                            )}
+                            {/*<Box*/}
+                            {/*    sx={{*/}
+                            {/*        mt: 1,*/}
+                            {/*        alignItems: 'center',*/}
+                            {/*        display: 'flex',*/}
+                            {/*        ml: -1*/}
+                            {/*    }}*/}
+                            {/*>*/}
+                            {/*    <Checkbox*/}
+                            {/*        checked={formik.values.policy}*/}
+                            {/*        name="policy"*/}
+                            {/*        onChange={formik.handleChange}*/}
+                            {/*    />*/}
+                            {/*    <Typography*/}
+                            {/*        color="textSecondary"*/}
+                            {/*        variant="body2"*/}
+                            {/*    >*/}
+                            {/*        I have read the*/}
+                            {/*        {' '}*/}
+                            {/*        <Link*/}
+                            {/*            to="#"*/}
+                            {/*            color="primary"*/}
+                            {/*            underline="always"*/}
+                            {/*            variant="subtitle2"*/}
+                            {/*        >*/}
+                            {/*            Terms and Conditions*/}
+                            {/*        </Link>*/}
+                            {/*    </Typography>*/}
+                            {/*</Box>*/}
+                            {/*{Boolean(formik.touched.policy && formik.errors.policy) && (*/}
+                            {/*    <FormHelperText error>*/}
+                            {/*        {formik.errors.policy}*/}
+                            {/*    </FormHelperText>*/}
+                            {/*)}*/}
                             <Box sx={{py: 2}}>
                                 <Button
                                     color="primary"
@@ -297,6 +307,20 @@ const Signup = () => {
                         </form>
                     </Container>
                 </Box>
+                <Snackbar open={error} autoHideDuration={5000} onClose={()=>{
+                    setError(false)
+                }}>
+                    <Alert severity="error">
+                        Failed Creating Account
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={success} autoHideDuration={5000} onClose={()=>{
+                    setSuccess(false)
+                }}>
+                    <Alert severity="success">
+                        Success creating account
+                    </Alert>
+                </Snackbar>
             </>
         );
     }

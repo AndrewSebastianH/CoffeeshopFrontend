@@ -25,10 +25,12 @@ function App() {
         <ThemeProvider theme={theme}>
             <Routes>
                 {/* Customer Page Routes */}
+
                 <Route path="/" element={ <Login/> }/>
                 <Route path="/signup" element={ <Signup/> }/>
-                {/*<Route path="/cart"  element={} />*/}
-                <Route path="/menu" element={ <CustomerMenu/> } />
+                <Route element={<Auth allowedRoles={["ROLE_CUSTOMER"]}/> }>
+                    <Route path="/menu" element={ <CustomerMenu/> } />
+                </Route>
 
                 {/* Admin Page Routes */}
                 <Route path="/admin/login" element={ <AdminLogin/> } />
@@ -38,7 +40,7 @@ function App() {
                 <Route element={<Auth allowedRoles={["ROLE_ADMIN"]}/>}>
                     <Route path="/admin/menu" element={ <AdminMenu/> }/>
                 </Route>
-                <Route path="/admin/customer-list" element={ <CustomersList/> }/>
+                {/*<Route path="/admin/customer-list" element={ <CustomersList/> }/>*/}
             </Routes>
         </ThemeProvider>
     );

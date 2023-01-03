@@ -69,9 +69,6 @@ const Login = () => {
 /*
         try {
            // const result = await UserModel.login(username, password)
-
-
-
             
           if (!result) {
                 console.log("ERROR")
@@ -127,7 +124,7 @@ const Login = () => {
                                 gutterBottom
                                 variant="body2"
                             >
-                                Sign in as customer
+                                Sign in using your account
                             </Typography>
                         </Box>
                         <Grid
@@ -135,30 +132,30 @@ const Login = () => {
                             spacing={3}
                         >
                         </Grid>
-                        <Box
-                            sx={{
-                                pb: 1,
-                                pt: 3
-                            }}
-                        >
-                            <Typography
-                                align="center"
-                                color="textSecondary"
-                                variant="body1"
-                            >
-                                or sign in as
-                                {' '}
+                        {/*<Box*/}
+                        {/*    sx={{*/}
+                        {/*        pb: 1,*/}
+                        {/*        pt: 3*/}
+                        {/*    }}*/}
+                        {/*>*/}
+                        {/*    <Typography*/}
+                        {/*        align="center"*/}
+                        {/*        color="textSecondary"*/}
+                        {/*        variant="body1"*/}
+                        {/*    >*/}
+                        {/*        or sign in as*/}
+                        {/*        {' '}*/}
 
-                                <Link
-                                    to="/admin/login"
-                                    color="primary"
-                                    underline="always"
-                                    variant="subtitle2"
-                                >
-                                    an Admin
-                                </Link>
-                            </Typography>
-                        </Box>
+                        {/*        <Link*/}
+                        {/*            to="/admin/login"*/}
+                        {/*            color="primary"*/}
+                        {/*            underline="always"*/}
+                        {/*            variant="subtitle2"*/}
+                        {/*        >*/}
+                        {/*            an Admin*/}
+                        {/*        </Link>*/}
+                        {/*    </Typography>*/}
+                        {/*</Box>*/}
                         <TextField
                             fullWidth
                             label="Username"
